@@ -1,6 +1,29 @@
 # ZetaSuit
 Zeta score method to analysis multiple targets multiple hits screening
 
+#Installation
+Since ZetaSuit is written in Shell, R and Perl, R and Perl are needed. 
+Other dependencies are:
+      1 library(e1071)
+      2 library(foreach)
+      3 library(ggplot2)
+      4 library(parallel)
+      5 library(RColorBrewer)
+      6 library(reshape2)
+      7 library(Rtsne)
+      8 library(scater)
+      
+The installation procedure is extremely easy. First, download the source code, unzip it, and go into the directory in the command line to test the example data.
+(code)
+
+And it is done!
+
+# The overall workflow of ZetaSuit.
+<img width="592" alt="image" src="https://user-images.githubusercontent.com/65927843/114289345-f800b800-9a2b-11eb-9c13-e1dd591dde1b.png">
+
+
+
+
 # If the input is the rawcount matrix, please run the Preprocess.sh first.
 Preprocess.sh including the following steps: 
   1) Filter low quailty samples and low quality readouts.
