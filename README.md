@@ -1,7 +1,7 @@
 # ZetaSuit
 Zeta score method to analysis multiple targets multiple hits screening
 
-#Installation
+# Installation
 Since ZetaSuit is written in Shell, R and Perl, R and Perl are needed. 
 Other dependencies are:
       1 library(e1071)
