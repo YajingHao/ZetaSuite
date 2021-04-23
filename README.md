@@ -22,7 +22,7 @@ And it is done!
 <img width="634" alt="image" src="https://user-images.githubusercontent.com/65927843/114289438-d18f4c80-9a2c-11eb-846d-4a54339fdb02.png">
 
 
-# If the input is the rawcount matrix, please run the Preprocess.sh first.
+# If the input is the raw read count matrix, please run the Preprocess.sh first.
 
 sh Preprocess.sh -n Negative.list -o outputName
 
@@ -40,6 +40,9 @@ ZetaSuit.sh including the following steps:
   4) Using the SVM curve to filter the genes which is more similar with the negative control.(option command, default:yes)
   5) Event Coverage to calculate the Zeta value.
   6) Draw screen strength curve based on the internal negative control.
+  
+# If the input is already normalized matrix. The normalization means the values are comparable between different events. The users can directly using ZetaSuite to calculate the acumulation strength. Run ZetaSuit_norm.sh. 
+  ZetaSuit_norm.sh'steps are similar with ZetaSuit_norm.sh, except step2.
 
 # following steps were decided by the users.
   1) Based on the screen strength curve, users can choose the different cut-off.
