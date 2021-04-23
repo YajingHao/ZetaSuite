@@ -4,14 +4,14 @@ Zeta score method to analysis multiple targets multiple hits screening
 # Installation
 Since ZetaSuit is written in Shell, R and Perl, R and Perl are needed. 
 Other dependencies are:
-      1 library(e1071)
-      2 library(foreach)
-      3 library(ggplot2)
-      4 library(parallel)
-      5 library(RColorBrewer)
-      6 library(reshape2)
-      7 library(Rtsne)
-      8 library(scater)
+      1) library(e1071)
+      2) library(foreach)
+      3) library(ggplot2)
+      4) library(parallel)
+      5) library(RColorBrewer)
+      6) library(reshape2)
+      7) library(Rtsne)
+      8) library(scater)
       
 The installation procedure is extremely easy. First, download the source code, unzip it, and go into the directory in the command line to test the example data.
 (code)
