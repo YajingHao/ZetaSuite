@@ -1,5 +1,5 @@
 # ZetaSuit
-Zeta score method to analysis multiple targets multiple hits screening
+A computation method to analysis multiple targets multiple hits screening
 
 # Installation
 Since ZetaSuit is written in Shell, R and Perl, R and Perl are needed. 
@@ -10,8 +10,9 @@ Other dependencies are:
       4) library(parallel)
       5) library(RColorBrewer)
       6) library(reshape2)
-      7) library(Rtsne)
+      7) library(reshape2)
       8) library(scater)
+
       
 The installation procedure is extremely easy. First, download the source code, unzip it, and go into the directory in the command line to test the example data.
 (code)
@@ -40,6 +41,7 @@ ZetaSuit.sh including the following steps:
   4) Using the SVM curve to filter the genes which is more similar with the negative control.(option command, default:yes)
   5) Event Coverage to calculate the Zeta value.
   6) Draw screen strength curve based on the internal negative control.
+ 
   
 # If the input is already normalized matrix. The normalization means the values are comparable between different events. The users can directly using ZetaSuite to calculate the acumulation strength. Run ZetaSuit_norm.sh. 
   ZetaSuit_norm.sh'steps are similar with ZetaSuit_norm.sh, except step2.
@@ -49,3 +51,10 @@ ZetaSuit.sh including the following steps:
   2) Based on the cut-off to selected the hits.
   3) Remove Off-targeting hits based on the regulation similarity and siRNA targeting.
   4) Draw Network for the hits.
+ 
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ # Parameters 
+ # Example
+ # Input files
+ # Output files
+ # Citations
