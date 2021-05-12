@@ -12,7 +12,7 @@ If you have any questions, please contact Yajing Hao <yahao@health.ucsd.edu> in 
 ## Installation
 Since ZetaSuit is written in `Shell`, `R` and `Perl`, `R` and `Perl` are needed. 
 
-Other dependencies are:
+Other R packages dependencies are:
     
     
      library(foreach)
@@ -20,12 +20,36 @@ Other dependencies are:
      library(parallel)
      library(RColorBrewer)
      library(reshape2)
-     library(reshape2)
+     library(DMwR)
      library(scater)
      library(e1071)
+     library(Rtsne)
+     library(clusterProfiler)
+     library(org.Hs.eg.db)
+     library(enrichplot)
+     library(DOSE)
+     library(bubbles)
+     library(colorRamps)
+     library(webshot)
+     library(htmlwidgets)
+     library(SC3)
+     library(SingleCellExperiment)
+     library(NbClust)
      
+You can just run the code below to install all the dependent R packages at once:
+
+`install.packages(c("foreach", "ggplot2","parallel","RColorBrewer", "reshape2","DMwR","e1071", "Rtsne","clusterProfiler","org.Hs.eg.db","enrichplot","DOSE","bubbles","colorRamps","webshot","htmlwidgets","SC3","SingleCellExperiment","NbClust"))`
+
+Other softwares dependencies are:
+
+- `Bedtools`(https://bioweb.pasteur.fr/docs/modules/bedtools/2.17.0/index.html)
+- `blast`(https://blast.ncbi.nlm.nih.gov/Blast.cgi)
+
       
-The installation procedure is extremely easy. First, download the source code, unzip it, and go into the directory in the command line to test the example data.
+The installation procedure is extremely easy. 
+1. clone the source code from git-hub.
+   - `github clone  `
+2. go into the directory in the command line to test the example data.
 (code)
 
 And it is done!
