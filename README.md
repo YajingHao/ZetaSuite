@@ -56,7 +56,7 @@ The installation procedure is extremely easy.
    
    `sh ZetaSuite.sh -a ...`
 
-And it is done!
+And it is done :v:!
 
 ## The overall workflow of ZetaSuit.
 ![workflow-01](https://user-images.githubusercontent.com/65927843/118020609-1ef22880-b30f-11eb-8e59-843c3eb4fe31.jpg)
@@ -69,29 +69,30 @@ And it is done!
       - Normalized matrix, which means the value in the matrix can directly compare and do the accumulation.
         
 
-#### If the input is the raw read count matrix without any processing, please run the `Preprocess.sh` first.
+* #### If the input is the raw read count matrix without any processing, please run the `Preprocess.sh` first.
 
-`sh Preprocess.sh -a <Input_dir> -b <output_dir> -i <Input_File> -o <Output_Name>`
+    `sh Preprocess.sh -a <Input_dir> -b <output_dir> -i <Input_File> -o <Output_Name>`
+    
+    `Preprocess.sh` including the following steps: 
+        1. Filter low quailty samples and low quality readouts.
+        2. Using KNN to estimate the value of the missing data points in the input matrix.
 
-`Preprocess.sh` including the following steps: 
-  1. Filter low quailty samples and low quality readouts.
-  2. Using KNN to estimate the value of the missing data points in the input matrix.
+* #### If the input is the already precessed matrix, you can directly run `ZetaSuit.sh`.
 
-#### If the input is the already precessed matrix, you can directly run `ZetaSuit.sh`.
+    `sh ZetaSuit.sh -a <Input_dir> -b <output_dir> -i <Input_File> -o <Output_Name> -n <Negative_Control> -p <Positive_Control>`
 
-`sh ZetaSuit.sh -a <Input_dir> -b <output_dir> -i <Input_File> -o <Output_Name> -n <Negative_Control> -p <Positive_Control>`
-
-ZetaSuit.sh including the following steps:
-  1. QC evaluation of the input datasets. We just evaluate the QC but will not do any filterations.
-  2. Calculate the Z-score to make the readouts are comparable.(option command -norm or -withoutNorm,default: -norm)
-  3. Calculate the Event Coverage for each genes.
-  4. Using the SVM curve to filter the genes which is more similar with the negative control.(option command -svm or -withousvm, default:-svm)
-  5. Whether the user need to directly compare the Zeta score in two directions? (option command -com or -withoutCom, default: -com)
-  6. Event Coverage to calculate the Zeta value.
-  7. Draw screen strength curve based on the internal negative control.
+    `ZetaSuit.sh` including the following steps:
+   
+    1. QC evaluation of the input datasets. We just evaluate the QC but will not do any filterations.
+    2. Calculate the Z-score to make the readouts are comparable.(option command -norm or -withoutNorm,default: -norm)
+    3. Calculate the Event Coverage for each genes. 
+    4. Using the SVM curve to filter the genes which is more similar with the negative control.(option command -svm or -withousvm, default:-svm)
+    5. Whether the user need to directly compare the Zeta score in two directions? (option command -com or -withoutCom, default: -com)
+    6. Event Coverage to calculate the Zeta value.
+    7. Draw screen strength curve based on the internal negative control.
  
   
-#### If the input is already normalized matrix, you can directly run `ZetaSuit.sh` with parameter `-com`. 
+* #### If the input is already normalized matrix, you can directly run `ZetaSuit.sh` with parameter `-com`. 
 
 ### Following steps were decided by the users, see example for detail.
   1. Based on the screen strength curve, users can choose the different cut-off.
