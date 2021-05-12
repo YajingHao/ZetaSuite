@@ -92,7 +92,7 @@ And it is done :v:!
     7. Draw screen strength curve based on the internal negative control.
  
   
-* #### If the input is already normalized matrix, you can directly run `ZetaSuit.sh` with parameter `-com`. 
+* #### If the input is already normalized matrix, you can directly run `ZetaSuit.sh` with parameter `-`. 
 
 ### Following steps were decided by the users, see example for detail.
   1. Based on the screen strength curve, users can choose the different cut-off.
