@@ -1,5 +1,4 @@
-## ZetaSuit
-**A computation workframe to analysis multiple targets multiple hits screening**
+## ZetaSuit : A computation workframe to analysis multiple targets multiple hits screening
 ![Figure1-01](https://user-images.githubusercontent.com/65927843/118019732-2b29b600-b30e-11eb-9ca0-5911dd82b608.jpg)
 If you have any questions, please contact Yajing Hao <yahao@health.ucsd.edu> in [Fu Lab](http://fugenome.ucsd.edu/).
 
@@ -48,11 +47,15 @@ Other softwares dependencies are:
       
 The installation procedure is extremely easy. 
 1. clone the source code from git-hub.
-   . `github clone https://github.com/YajingHao/ZetaSuit.git`
+   
+   `github clone https://github.com/YajingHao/ZetaSuit.git`
 2. go into the directory in the command line. 
-   . `cd bin`
+   
+   `cd bin`
 3. test the example data.
-   .  `sh ZetaSuite.sh -a ...`
+   
+   `sh ZetaSuite.sh -a ...`
+
 And it is done!
 
 ## The overall workflow of ZetaSuit.
