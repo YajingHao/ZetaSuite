@@ -48,10 +48,11 @@ Other softwares dependencies are:
       
 The installation procedure is extremely easy. 
 1. clone the source code from git-hub.
-   - `github clone  `
-2. go into the directory in the command line to test the example data.
-(code)
-
+   . `github clone https://github.com/YajingHao/ZetaSuit.git`
+2. go into the directory in the command line. 
+   . `cd bin`
+3. test the example data.
+   .  `sh ZetaSuite.sh -a ...`
 And it is done!
 
 ## The overall workflow of ZetaSuit.
