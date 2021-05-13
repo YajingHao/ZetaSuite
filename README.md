@@ -109,9 +109,9 @@ And it is done :v:!
  
  ----------------------------------------------------------------------------------------------------------------------------------------------------------------
  ## Testing ZetaSuite using one example
-We provided example data for using ZetaSuite to explore the hits and do futher functional interpretation based on the our in-house HTS2 screening dataset. To save the testing time, we provide a subsampled dataset. While this test data may not yield reasonable results, it can be used to see how the workflow is configured and executed.
+We provided example data for using ZetaSuite to explore the hits and do futher functional interpretation based on our in-house HTS2 screening dataset. To save the testing time, we provide a subsampled dataset. While this test data may not yield reasonable results, it can be used to see how the workflow is configured and executed.
 
-#### step 1. we started with the preprecessed the data set which already remove the low qulity rows and columns.
+#### step 1. we started with the preprecessed data set which was already removed the low qulity rows and columns.
 Users can find the example data set in the [example](https://github.com/YajingHao/ZetaSuit/tree/master/data) directory.
 The example input files including:
    
@@ -144,9 +144,10 @@ The example input files including:
      `cd bin`
      
 #### step 4. removing off-targeting genes
-     
+     `cd bin`
 #### step 5. functional interpretation
+     `cd bin` 
 #### step 6. constructing network files
-
+     `cd bin`
  
  # Citations
