@@ -1,11 +1,11 @@
-## ZetaSuit : A computation workframe to analysis multiple targets multiple hits screening
+## ZetaSuit : A Computational Method for Analyzing Multi-dimensional High-throughput Data
+
 ![Figure1-01](https://user-images.githubusercontent.com/65927843/118019732-2b29b600-b30e-11eb-9ca0-5911dd82b608.jpg)
 If you have any questions, please contact Yajing Hao <yahao@health.ucsd.edu> in [Fu Lab](http://fugenome.ucsd.edu/).
 
 ## Table of contents
 - Installation
 - The overall workflow of ZetaSuit
-- Parameters
 - Testing ZetaSuite using one example
 - Citations
 ## Installation
@@ -83,24 +83,53 @@ And it is done :v:!
 
     `ZetaSuit.sh` including the following steps:
    
-    1. QC evaluation of the input datasets. We just evaluate the QC but will not do any filterations.
-    2. Calculate the Z-score to make the readouts are comparable.(option command -norm or -withoutNorm,default: -norm)
-    3. Calculate the Event Coverage for each genes. 
-    4. Using the SVM curve to filter the genes which is more similar with the negative control.(option command -svm or -withousvm, default:-svm)
-    5. Whether the user need to directly compare the Zeta score in two directions? (option command -com or -withoutCom, default: -com)
-    6. Event Coverage to calculate the Zeta value.
-    7. Draw screen strength curve based on the internal negative control.
+    1). QC evaluation of the input datasets. We just evaluate the QC but will not do any filterations.
+  
+    2). Calculate the Z-score to make the readouts are comparable.(option command -norm or -withoutNorm,default: -norm)
+    
+    3). Calculate the Event Coverage for each genes. 
+    
+    4). Using the SVM curve to filter the genes which is more similar with the negative control.(option command -svm or -withousvm, default:-svm)
+    
+    5). Whether the user need to directly compare the Zeta score in two directions? (option command -com or -withoutCom, default: -com)
+    
+    6). Calculate the Zeta score.
+    
+    7). Draw screen strength curve based on the internal negative control.
  
   
-* #### If the input is already normalized matrix, you can directly run `ZetaSuit.sh` with parameter `-`. 
+* #### If the input is already normalized matrix, you can directly run `ZetaSuit.sh` with parameter `-withoutNorm`. 
 
 ### Following steps were decided by the users, see example for detail.
-  1. Based on the screen strength curve, users can choose the different cut-off.
-  2. Based on the cut-off to selected the hits.
+  1. Based on the screen strength curve, users can define their optimal threshold by considering both SS and inflection points..
+  2. Based on the threshold to selected the hits.
   3. Remove Off-targeting hits based on the regulation similarity and siRNA targeting.
-  4. Draw Network for the hits.
+  4. Function interpretation of selected hits based on [ClusterProfiler](https://github.com/YuLab-SMU/clusterProfiler) and [CORUM complexes database](https://github.com/YuLab-SMU/clusterProfiler).The top 15 GO terms with lowest adjust p-values were presented and the top 15 complexes with highest hits’ number were gave.If the complexes number were lower than 15, the complexes with hits’ number larger than 3 would be outputted.
+  5. Constructed Network files for user selected hits. Then can directly input [Gephi](https://gephi.org/) for visulization.
  
  ----------------------------------------------------------------------------------------------------------------------------------------------------------------
- ## Parameters 
  ## Testing ZetaSuite using one example
+We provided example data for using ZetaSuite to explore the hits and do futher functional interpretation based on the our in-house HTS2 screening dataset. To save the testing time, we provide a subsampled dataset. While this test data may not yield reasonable results, it can be used to see how the workflow is configured and executed.
+
+#### step 1. we started with the preprecessed the data set which already remove the low qulity rows and columns.
+Users can find the example data set in the [example](https://github.com/YajingHao/ZetaSuit/tree/master/data) directory.
+The example input files including:
+   
+   1. input matrix file, each row represents gene with specific knocking-down siRNA pool, each column is an AS event. The values in the matrix are the processed readcounts foldchange values between included exons and skipping exons. 
+   
+   (we random pick-up 2000 genes and 200 AS events as example matrix)
+   
+   <img width="390" alt="image" src="https://user-images.githubusercontent.com/65927843/118161936-06e4dc80-b3d5-11eb-880b-259f46b00543.png">
+
+   2. input negative file, the wells treated with non-specific siRNAs.If uses didn't have the build-in negative controls, the non-expressed genes should be provided here.
+   3. input positive file, the wells treasted with siRNAs targeting to PTB.If uses didn't have the build-in negative controls, choose the parameters `-withoutsvm` and the filename can use any name such as 'NA'.
+   4. input internal negative control (non-expressed genes), genes which annotated as non-expressed (RPKM<1) in HeLa cells.
+#### step 2. run zetasuite main pipeline
+
+#### step 3. selected the thresholds
+#### step 4. removing off-targeting genes
+#### step 5. functional interpretation
+#### step 6. constructing network files
+
+ 
  # Citations
