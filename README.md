@@ -115,19 +115,35 @@ We provided example data for using ZetaSuite to explore the hits and do futher f
 Users can find the example data set in the [example](https://github.com/YajingHao/ZetaSuit/tree/master/data) directory.
 The example input files including:
    
-   1. input matrix file, each row represents gene with specific knocking-down siRNA pool, each column is an AS event. The values in the matrix are the processed readcounts foldchange values between included exons and skipping exons. 
+   1. input matrix file, [Example_matrix.txt](https://github.com/YajingHao/ZetaSuit/tree/master/data), Each row represents gene with specific knocking-down siRNA pool, each column is an AS event. The values in the matrix are the processed readcounts foldchange values between included exons and skipping exons. 
    
    (we random pick-up 2000 genes and 200 AS events as example matrix)
    
    <img width="390" alt="image" src="https://user-images.githubusercontent.com/65927843/118161936-06e4dc80-b3d5-11eb-880b-259f46b00543.png">
 
-   2. input negative file, the wells treated with non-specific siRNAs.If uses didn't have the build-in negative controls, the non-expressed genes should be provided here.
-   3. input positive file, the wells treasted with siRNAs targeting to PTB.If uses didn't have the build-in negative controls, choose the parameters `-withoutsvm` and the filename can use any name such as 'NA'.
-   4. input internal negative control (non-expressed genes), genes which annotated as non-expressed (RPKM<1) in HeLa cells.
-#### step 2. run zetasuite main pipeline
-
+   2. input negative file, the wells treated with non-specific siRNAs, [Example_negative_wells.list](https://github.com/YajingHao/ZetaSuit/tree/master/data). If users didn't have the build-in negative controls, the non-expressed genes should be provided here.
+   3. input positive file, the wells treasted with siRNAs targeting to PTB, [Example_positive_wells.list](https://github.com/YajingHao/ZetaSuit/tree/master/data). If users didn't have the build-in negative controls, choose the parameters `-withoutsvm` and the filename can use any name such as 'NA'.
+   4. input internal negative control (non-expressed genes), genes which annotated as non-expressed (RPKM<1) in HeLa cells, [Example_NonExp_wells.list](https://github.com/YajingHao/ZetaSuit/tree/master/data).
+  
+#### step 2. run [ZetaSuite] main pipeline
+    `cd bin`
+    `sh ZetaSuit.sh -a ../example -b ../output_example -i Example_matrix.txt -o Example -n Example_negative_wells.list -p Example_postive_wells.list -c Example_NonExp_wells.list`
+     
+     After finished processing, we will obtain the following files and figures.
+     1. QC figure:
+     2. SVM figure:
+     3. ZetaScore file:
+     4. ScreenStrength curve with inflection points selections:   
+  
 #### step 3. selected the thresholds
+     
+     Users can check the Screenstrength curves and the provided inflection points candidate to choose the threshold.
+     As for example data set, we set the threshold as,
+     Then obtain hits passed the threshold with the following command:
+     `cd bin`
+     
 #### step 4. removing off-targeting genes
+     
 #### step 5. functional interpretation
 #### step 6. constructing network files
 
