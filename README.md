@@ -125,19 +125,20 @@ The example input files including:
    3. input positive file, the wells treasted with siRNAs targeting to PTB, [Example_positive_wells.list](https://github.com/YajingHao/ZetaSuit/tree/master/data). If users didn't have the build-in negative controls, choose the parameters `-withoutsvm` and the filename can use any name such as 'NA'.
    4. input internal negative control (non-expressed genes), genes which annotated as non-expressed (RPKM<1) in HeLa cells, [Example_NonExp_wells.list](https://github.com/YajingHao/ZetaSuit/tree/master/data).
   
-#### step 2. run [ZetaSuite] main pipeline
+#### step 2. run [ZetaSuite](https://github.com/YajingHao/ZetaSuit) main pipeline
     `cd bin`
     `sh ZetaSuit.sh -a ../example -b ../output_example -i Example_matrix.txt -o Example -n Example_negative_wells.list -p Example_postive_wells.list -c Example_NonExp_wells.list`
      
-     After finished processing, we will obtain the following files and figures.
-     1. QC figure:
-     2. SVM figure:
-     3. ZetaScore file:
-     4. ScreenStrength curve with inflection points selections:   
+  After finished processing, we will obtain the following files and figures:
+  
+   1. QC figure:
+   2. SVM figure:
+   3. ZetaScore file:
+   4. ScreenStrength curve and files.
   
 #### step 3. selected the thresholds
      
-     Users can check the Screenstrength curves and the provided inflection points candidate to choose the threshold.
+   Users can check the Screenstrength curves and the provided inflection points candidate to choose the threshold.
      As for example data set, we set the threshold as,
      Then obtain hits passed the threshold with the following command:
      `cd bin`
