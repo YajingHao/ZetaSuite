@@ -109,7 +109,7 @@ And it is done :v:!
  
  ----------------------------------------------------------------------------------------------------------------------------------------------------------------
  ## Testing ZetaSuite using one example
-We provided example data for using ZetaSuite to explore the hits and do futher functional interpretation based on our in-house HTS2 screening dataset. To save the testing time, we provide a subsampled dataset. While this test data may not yield reasonable results, it can be used to see how the workflow is configured and executed.
+We provided example data (our in-house HTS2 screening dataset) for using ZetaSuite to explore the hits and do futher functional interpretation. To save the testing time, we provide a subsampled dataset. While this test data may not yield reasonable results, it can be used to see how the workflow is configured and executed.
 
 #### step 1. we started with the preprecessed data set which was already removed the low qulity rows and columns.
 Users can find the example data set in the [example](https://github.com/YajingHao/ZetaSuit/tree/master/data) directory.
@@ -117,37 +117,75 @@ The example input files including:
    
    1. input matrix file, [Example_matrix.txt](https://github.com/YajingHao/ZetaSuit/tree/master/data), Each row represents gene with specific knocking-down siRNA pool, each column is an AS event. The values in the matrix are the processed readcounts foldchange values between included exons and skipping exons. 
    
-   (we random pick-up 2000 genes and 200 AS events as example matrix)
+      (we random pick-up 2000 genes and 200 AS events as example matrix)
    
-   <img width="390" alt="image" src="https://user-images.githubusercontent.com/65927843/118161936-06e4dc80-b3d5-11eb-880b-259f46b00543.png">
+      <img width="390" alt="image" src="https://user-images.githubusercontent.com/65927843/118161936-06e4dc80-b3d5-11eb-880b-259f46b00543.png">
 
    2. input negative file, the wells treated with non-specific siRNAs, [Example_negative_wells.list](https://github.com/YajingHao/ZetaSuit/tree/master/data). If users didn't have the build-in negative controls, the non-expressed genes should be provided here.
-   3. input positive file, the wells treasted with siRNAs targeting to PTB, [Example_positive_wells.list](https://github.com/YajingHao/ZetaSuit/tree/master/data). If users didn't have the build-in negative controls, choose the parameters `-withoutsvm` and the filename can use any name such as 'NA'.
+   3. input positive file, the wells treated with siRNAs targeting to PTB, [Example_positive_wells.list](https://github.com/YajingHao/ZetaSuit/tree/master/data). If users didn't have the build-in negative controls, choose the parameters `-withoutsvm` and the filename can use any name such as 'NA'.
    4. input internal negative control (non-expressed genes), genes which annotated as non-expressed (RPKM<1) in HeLa cells, [Example_NonExp_wells.list](https://github.com/YajingHao/ZetaSuit/tree/master/data).
   
 #### step 2. run [ZetaSuite](https://github.com/YajingHao/ZetaSuit) main pipeline
-    `cd bin`
-    `sh ZetaSuit.sh -a ../example -b ../output_example -i Example_matrix.txt -o Example -n Example_negative_wells.list -p Example_postive_wells.list -c Example_NonExp_wells.list`
+   
+  ```
+   cd bin
+   sh ZetaSuit.sh -a ../example -b ../output_example -i Example_matrix.txt -o Example -n Example_negative_wells.list -p Example_postive_wells.list -c Example_NonExp_wells.list
+  ```
      
-  After finished processing, we will obtain the following files and figures:
+After finished processing, we will obtain the following files and figures in the corresponding directory:
   
    1. QC figure:
-   2. SVM figure:
-   3. ZetaScore file:
-   4. ScreenStrength curve and files.
+   2. Normalized matrix:
+   3. SVM figure:
+   4. ZetaScore file:
+   5. ZetaScore figure:
+   6. ScreenStrength curve and files:
   
 #### step 3. selected the thresholds
      
-   Users can check the Screenstrength curves and the provided inflection points candidate to choose the threshold.
-     As for example data set, we set the threshold as,
-     Then obtain hits passed the threshold with the following command:
-     `cd bin`
-     
+   Users can check the Screenstrength curves and find the optimal threshold based on balance points and Screen strength.
+   As for example data set, we set the threshold as,
+   
+   Then obtain hits passed the threshold with the following command:
+     ```
+      Cutoff_D=0.07117596
+      Cutoff_I=0.021272834
+      awk -v cutoff=${Cutoff_D} '{FS=OFS="\t"}{if(NR==1 || $2>cutoff){print}}' D2_DRIVE_Zeta_anno.txt > Example_D_hits
+      awk -v cutoff=${Cutoff_I} '{FS=OFS="\t"}{if(NR==1 || $3>cutoff){print}}' D2_DRIVE_Zeta_anno.txt > Example_I_hits
+      
+     ```
 #### step 4. removing off-targeting genes
-     `cd bin`
-#### step 5. functional interpretation
-     `cd bin` 
+   
+   The input files for off-targeting remove are:
+   1) Targeting RNA sequences
+     
+   2) Gloden gene sets
+   
+   3) Hits
+   
+   4) Gene location files: [bed format](https://genome.ucsc.edu/FAQ/FAQformat.html#format1). The genome version should be human release 38(hg38).
+     The default file is human gene locations downloaded from [Genecode database](https://www.gencodegenes.org/human/)(V28).
+   
+   5) Normalized matrix from **step2**
+   
+   `cd bin
+     `
+#### step 5. functional interpretation of hits
+   The input file is hits file from **step3**
+     `cd bin
+     sh Function.sh -a -b -i Example_D_hits -o Example_D
+     sh Function.sh -a -b -i Example_I_hits -o Example_I` 
+   The output files are below:
+    
 #### step 6. constructing network files
-     `cd bin`
+   The input files for Network construction are:
+    1)Normalized matrix from **step2**
+    2)Hits from **step3**
+    3)consensus_score_cutoff, the threshold to choose edges in the network.
+    `cd bin
+     cat Example_D_hits Example_I_hits |cut -f 1|sort|uniq > TotalHits.txt
+     sh Network.sh -a <Input_dir> -b <output_dir> -h TotalHits.txt -i <Input_File> -o Example_Hits -c 0.5`
+     
+   The output files are below:
  
  # Citations
