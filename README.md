@@ -79,26 +79,26 @@ And it is done :v:!
 
 * #### If the input is the already precessed matrix, you can directly run `ZetaSuit.sh`.
 
-    `sh ZetaSuit.sh -a <Input_dir> -b <output_dir> -i <Input_File> -o <Output_Name> -n <Negative_Control> -p <Positive_Control>`
+    `perl ZetaSuite.pl -id <input_dir> -od <output_dir> -in <input_matrix> -op <output_prefix> -p <positive.list> -n <negative.list> -ne <internatal_negative.list>`
 
-    `ZetaSuit.sh` including the following steps:
+    `ZetaSuite.pl` including the following steps:
    
-    1). QC evaluation of the input datasets. We just evaluate the QC but will not do any filterations.
+    1). QC evaluation of the input matrix `<input_matrix>`. We just evaluate the QC but will not do any filterations.
   
-    2). Calculate the Z-score to make the readouts are comparable.(option command -norm or -withoutNorm,default: -norm)
+    2). Calculate the Z-score to make the readouts are comparable.(option command `-z` yes or no,default: yes)
     
     3). Calculate the Event Coverage for each genes. 
     
-    4). Using the SVM curve to filter the genes which is more similar with the negative control.(option command -svm or -withousvm, default:-svm)
+    4). Using the SVM curve to filter the genes which is more similar with the negative control.(option command `-svm` yes or no , default: yes)
     
-    5). Whether the user need to directly compare the Zeta score in two directions? (option command -com or -withoutCom, default: -com)
+    5). Whether the user need to directly compare the Zeta score in two directions and use the combined Zeta score to do hits' selection? (option command `-c` yes or no, default: no)
     
     6). Calculate the Zeta score.
     
-    7). Draw screen strength curve based on the internal negative control.
+    7). Draw screen strength curve based on the internal negative control `<internatal_negative.list>`.
  
   
-* #### If the input is already normalized matrix, you can directly run `ZetaSuit.sh` with parameter `-withoutNorm`. 
+* #### If the input is already normalized matrix, you can directly run `ZetaSuite.pl` with parameter `-z no`. 
 
 ### Following steps were decided by the users, see example for detail.
   1. Based on the screen strength curve, users can define their optimal threshold by considering both SS and inflection points..
@@ -128,13 +128,16 @@ The example input files including:
 #### step 2. run [ZetaSuite](https://github.com/YajingHao/ZetaSuit) main pipeline
    
   ```
-   cd bin
-   sh ZetaSuit.sh -a ../example -b ../output_example -i Example_matrix.txt -o Example -n Example_negative_wells.list -p Example_postive_wells.list -c Example_NonExp_wells.list
+  perl ZetaSuite.pl -id ./example -od ./output_example -in Example_matrix.txt -op Example -p Example_postive_wells.list -n Example_negative_wells.list -ne Example_NonExp_wells.list -z yes -c yes -svm yes
   ```
      
 After finished processing, we will obtain the following files and figures in the corresponding directory:
+
+The most time cosuming step is SVM in our pipeline. If you just want to test the pipeline, you can choose `-svm no`.
   
-   1. QC figure:
+  `cd /output_example`
+  
+   1. QC figure :
    2. Normalized matrix:
    3. SVM figure:
    4. ZetaScore file:
@@ -147,6 +150,7 @@ After finished processing, we will obtain the following files and figures in the
    As for example data set, we set the threshold as,
    
    Then obtain hits passed the threshold with the following command:
+   
      ```
       Cutoff_D=0.07117596
       Cutoff_I=0.021272834
@@ -189,3 +193,7 @@ After finished processing, we will obtain the following files and figures in the
    The output files are below:
  
  # Citations
+
+**software** : *Yajing Hao, Changwei Shao, Guofeng Zhao, Xiang-Dong Fu (2021). ZetaSuite, A Computational Method for Analyzing Multi-dimensional High-throughput Data, Reveals Genes with Opposite Roles in Cancer Dependency. Forthcoming*
+
+**in-house dataset** : *Changwei Shao, Yajing Hao, Jinsong Qiu, Bing Zhou, Hairi Li, Yu Zhou, Fan Meng, Li Jiang, Lan-Tao Gou, Jun Xu, Yuanjun Li,Hui Wang, Gene W. Yeo, Dong Wang, Xiong Ji, Christopher K. Glass, Pedro Aza-Blanc, Xiang-Dong Fu (2021). HTS2 Screen for Global Splicing Regulators Reveals a Key Role of the Pol II Subunit RPB9 in Coupling between Transcription and Pre-mRNA Splicing. Cell.  Forthcoming.* 
