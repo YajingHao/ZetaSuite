@@ -51,14 +51,14 @@ The installation procedure is extremely easy.
    `github clone https://github.com/YajingHao/ZetaSuit.git`
 2. go into the directory in the command line. 
    
-   `cd bin`
+   `cd ZetaSuite`
 3. test the example data.
    
-   `sh ZetaSuite.sh -a ...`
+   `perl ZetaSuite.pl -id ./example -od ./output_example -in Example_matrix.txt -op Example -p Example_postive_wells.list -n Example_negative_wells.list -ne Example_NonExp_wells.list -z yes -c yes -svm no`
 
 And it is done :v:!
 
-## The overall workflow of ZetaSuit.
+## The overall workflow of ZetaSuite.
 ![workflow-01](https://user-images.githubusercontent.com/65927843/118020609-1ef22880-b30f-11eb-8e59-843c3eb4fe31.jpg)
 
 
@@ -137,60 +137,123 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
   
   `cd /output_example`
   
-   1. QC figure :
-   2. Normalized matrix:
-   3. SVM figure:
-   4. ZetaScore file:
-   5. ZetaScore figure:
-   6. ScreenStrength curve and files:
+   1. QC figures : `cd QC`
+   
+   Example_tSNE_QC.pdf is the global evaluation based on all the readouts. This figure can evaluate whether the positive and negative samples are well separted based on current all readouts.
+   
+   The following 3 figures is the quality evaluation of the individual readouts.
+   
+![QC-01](https://user-images.githubusercontent.com/65927843/118415924-ef6e5380-b661-11eb-9a97-7354fca27158.png)
+
+
+
+   2. Normalized matrix:  `cd Zscore` **Example_Zscore.matrix** is the normalized matrix, each row represents each knocking-down condition and each column is a specific readout. The values in the matrix are the normalized value.
+   
+   3. EventCoverage figures for positive and negative samples: `cd EventCoverage`
+     
+   ![EC_figures-01](https://user-images.githubusercontent.com/65927843/118417118-8689da00-b667-11eb-86eb-8a3813385110.png)
+
+   
+   4. ZetaScore file: `cd Zscore` Example_Zeta.txt is the zeta values for all tested knockding-down genes including positive and negative controls. The first line is the direction which means the knockding-down lead to exon inclusion, whereas the second line is the knock-down lead to exon skipping.
+   
+   5. ZetaScore figure: `cd FDR_cutoff` Example_Zeta_type.pdf
+   <img width="990" alt="image" src="https://user-images.githubusercontent.com/65927843/118415093-3148cb00-b65d-11eb-8e1c-448aaf00a173.png">
+
+
+   6. ScreenStrength curve: `cd FDR_cutoff` Example_SS_cutOff.pdf
+  <img width="800" alt="image" src="https://user-images.githubusercontent.com/65927843/118530970-23955300-b6fa-11eb-9bfa-144149df4946.png">
+
   
 #### step 3. selected the thresholds
      
-   Users can check the Screenstrength curves and find the optimal threshold based on balance points and Screen strength.
-   As for example data set, we set the threshold as,
+   Users can check the Screenstrength curves (**Example_SS_cutOff.pdf**) and find the optimal threshold based on balance points and Screen strength.
+   With our example data, we actually identified two BPs, thereby enabling us to define candidate hits after BP1 and high confidence hits after BP2, the latter of which maximally eliminate true false positives derived from non-expressors. To keep enough hits for further analysis, we selected the BP1 as threshold,
    
    Then obtain hits passed the threshold with the following command:
    
      ```
-      Cutoff_D=0.07117596
-      Cutoff_I=0.021272834
-      awk -v cutoff=${Cutoff_D} '{FS=OFS="\t"}{if(NR==1 || $2>cutoff){print}}' D2_DRIVE_Zeta_anno.txt > Example_D_hits
-      awk -v cutoff=${Cutoff_I} '{FS=OFS="\t"}{if(NR==1 || $3>cutoff){print}}' D2_DRIVE_Zeta_anno.txt > Example_I_hits
+      cd output_example
+      mkdir Hits
+      Cutoff=0.1211316
+      awk -v cutoff=${Cutoff} '{FS=OFS="\t"}{if(NR==1 || (($2+$3)>cutoff && $4=="Gene")){print}}' FDR_cutoff/Example_Zeta_anno.txt > Hits/Example_hits.txt
       
      ```
 #### step 4. removing off-targeting genes
    
-   The input files for off-targeting remove are:
-   1) Targeting RNA sequences
+   The input files for off-targeting remove are: 
+   
+   
+##### 1) Targeting RNA sequences
+   
+   You can find this file in **example** folder: *Example_siRNA.fa*.
      
-   2) Gloden gene sets
+##### 2) Gloden gene sets
    
-   3) Hits
+   You can find this file in **example** folder: *Example_GlodenSet.txt*. This is constructed based on the priori knowledge.
    
-   4) Gene location files: [bed format](https://genome.ucsc.edu/FAQ/FAQformat.html#format1). The genome version should be human release 38(hg38).
-     The default file is human gene locations downloaded from [Genecode database](https://www.gencodegenes.org/human/)(V28).
+   In the example data, we used the annotated spliceosome genes as golden set.
    
-   5) Normalized matrix from **step2**
+##### 3) Hits from **step3**
+     
+   file name is: *Example_hits.txt*
    
-   `cd bin
-     `
+##### 4) Gene location files: [bed format](https://genome.ucsc.edu/FAQ/FAQformat.html#format1). The genome version should be human release 38(hg38).
+   
+   The default file is human gene locations downloaded from [Genecode database](https://www.gencodegenes.org/human/)(V28).
+   
+   You can find this file in **example** folder: *gencode.v28.annotation.bed*
+   
+##### 5) GeneID transfer files: Transfer transcript name to GeneID. You can construct the file directly from the gtf files downloaded from [Genecode database](https://www.gencodegenes.org/human/).
+  
+  You can find this file in **example** folder: *geneID_transcriptID_geneName_V28*
+   
+   ```
+   awk 'BEGIN{FS=OFS="\t"}{if($3=="transcript"){print $9}}' gencode.v28.annotation.gtf |sed 's/; /\t/g'|sed 's/ "/\t/g'|cut -f 2,4,8|sed 's/"//g' > geneID_transcriptID_geneName_V28
+   
+   ```
+  
+ ##### 6) Normalized matrix from **step2**
+   
+   ` cd output_example/Zscore`
+   
+   file name is : *Example_Zscore.matrix*
+   
+   Run the following code to remove candidate off-targeting genes:
+   
+   ```
+   cd bin
+   sh OffTargeting.sh -b ../output_example/Hits -i ../output_example/Hits/Example_hits.txt -o OffT -m ../output_example/Zscore/Example_Zscore.matrix -t ../example/Example_siRNA.fa -l ../example/gencode.v28.annotation.bed -g ../example/Example_GlodenSet.txt -c ../example/geneID_transcriptID_geneName_V28
+   ```
+   The output files is in **../output_example/Hits** folder: *OffT_output.txt* ; the hits appear in this file were candidate off-targeting genes.
+   
 #### step 5. functional interpretation of hits
    The input file is hits file from **step3**
-     `cd bin
-     sh Function.sh -a -b -i Example_D_hits -o Example_D
-     sh Function.sh -a -b -i Example_I_hits -o Example_I` 
+    
+    ```
+    cd bin
+    sh Function.sh -a ../output_example/Hits -b ../output_example/Hits -i Example_hits.txt -o Example_Functions
+    
+    ``` 
    The output files are below:
+   
+   <img width="887" alt="image" src="https://user-images.githubusercontent.com/65927843/118561319-abda1f00-b71f-11eb-9df4-53882e9ac9d2.png">
+
     
 #### step 6. constructing network files
    The input files for Network construction are:
     1)Normalized matrix from **step2**
     2)Hits from **step3**
     3)consensus_score_cutoff, the threshold to choose edges in the network.
-    `cd bin
-     cat Example_D_hits Example_I_hits |cut -f 1|sort|uniq > TotalHits.txt
-     sh Network.sh -a <Input_dir> -b <output_dir> -h TotalHits.txt -i <Input_File> -o Example_Hits -c 0.5`
-     
-   The output files are below:
+   
+   ```
+     cd bin
+     sh Network.sh -b ../output_example/Hits -h ../output_example/Hits/Example_hits.txt -i ../output_example/Zscore/Example_Zscore.matrix -o Network -c 0.4
+   ```  
+ The output files are below:
+      **Edge file**: *Network_Edges_filter.csv* and **Node file**: *Network_Network_node.csv*
+  
+ Lode this files to **Gephi** for visulization:
+ 
  
  # Citations
 
