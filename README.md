@@ -252,9 +252,10 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
  The output files are below:
       **Edge file**: *Network_Edges_filter.csv* and **Node file**: *Network_Network_node.csv*
   
- Lode this files to **Gephi** for visulization:
+ Load these files to **Gephi** for visulization:
  
- 
+ ![Network](https://user-images.githubusercontent.com/65927843/118563054-bb0e9c00-b722-11eb-9f33-d8299e5d2abc.png)
+
  # Citations
 
 **software** : *Yajing Hao, Changwei Shao, Guofeng Zhao, Xiang-Dong Fu (2021). ZetaSuite, A Computational Method for Analyzing Multi-dimensional High-throughput Data, Reveals Genes with Opposite Roles in Cancer Dependency. Forthcoming*
