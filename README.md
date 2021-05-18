@@ -48,7 +48,7 @@ Other softwares dependencies are:
 The installation procedure is extremely easy. 
 1. clone the source code from git-hub.
    
-   `github clone https://github.com/YajingHao/ZetaSuit.git`
+   `git clone https://github.com/YajingHao/ZetaSuit.git`
 2. go into the directory in the command line. 
    
    ```
@@ -67,6 +67,7 @@ The installation procedure is extremely easy.
    Go to ZetaSuite directory,and run the example.
    
    ```
+   cd ..
    chmod 777 ZetaSuite.pl
    perl ZetaSuite.pl -id ./example -od ./output_example -in Example_matrix.txt -op Example -p Example_postive_wells.list -n Example_negative_wells.list -ne Example_NonExp_wells.list -z yes -c yes -svm no
    
@@ -80,7 +81,7 @@ And it is done :v:!
 
 ### The input of ZetaSuite can be three types:
       
-      - Raw read count matrix, in the example data: row is the genes with targeting siRNAs, and columns are the AS events as readouts.
+      - Raw read count matrix, in the example data: rows are the genes with targeting siRNAs, and columns are the AS events as readouts.
       - Preprocess matrix, which means the low-quality rows and columns were already filtered by users.
       - Normalized matrix, which means the value in the matrix can directly compare and do the accumulation.
         
@@ -96,6 +97,26 @@ And it is done :v:!
 * #### If the input is the already precessed matrix, you can directly run `ZetaSuit.sh`.
 
     `perl ZetaSuite.pl -id <input_dir> -od <output_dir> -in <input_matrix> -op <output_prefix> -p <positive.list> -n <negative.list> -ne <internatal_negative.list>`
+    
+    You can check the parameters for ZetaSuite by simply t
+    
+    `perl ZetaSuite.pl -h`
+    
+    ```
+    Usage:    
+    -id  <STR>   input directory [require]
+    -od  <STR>	 output directory [require]
+    -in  <STR>   input file name [require]
+    -op  <STR>	 output file prefix [require]
+    -p   <STR>	 positive control file [require]
+    -n   <STR>   negative control file [require]
+    -ne  <STR>   internal negative control file (non-expressed genes) [require]
+    -z   <STR>   zscore normalization(yes or no) [default yes]
+    -c   <STR>   combine two direction zeta together(yes or no) [default no] 
+    -svm <STR>	 svm calculation (yes or no) [dafault yes]
+    -h   <STR>   documents help
+    
+    ```
 
     `ZetaSuite.pl` including the following steps:
    
@@ -128,18 +149,18 @@ And it is done :v:!
 We provided example data (our in-house HTS2 screening dataset) for using ZetaSuite to explore the hits and do futher functional interpretation. To save the testing time, we provide a subsampled dataset. While this test data may not yield reasonable results, it can be used to see how the workflow is configured and executed.
 
 #### step 1. we started with the preprecessed data set which was already removed the low qulity rows and columns.
-Users can find the example data set in the [example](https://github.com/YajingHao/ZetaSuit/tree/master/data) directory.
+Users can find the example data set in the [example](https://github.com/YajingHao/ZetaSuit/tree/master/example) directory.
 The example input files including:
    
-   1. input matrix file, [Example_matrix.txt](https://github.com/YajingHao/ZetaSuit/tree/master/data), Each row represents gene with specific knocking-down siRNA pool, each column is an AS event. The values in the matrix are the processed readcounts foldchange values between included exons and skipping exons. 
+   1. input matrix file, [Example_matrix.txt](https://github.com/YajingHao/ZetaSuit/blob/master/example/Example_matrix.txt), Each row represents gene with specific knocking-down siRNA pool, each column is an AS event. The values in the matrix are the processed foldchange values between included exons and skipping exons readcounts. 
    
-      (we random pick-up 2000 genes and 200 AS events as example matrix)
+      (we randomly pick-up 2000 genes and 200 AS events as example matrix)
    
       <img width="390" alt="image" src="https://user-images.githubusercontent.com/65927843/118161936-06e4dc80-b3d5-11eb-880b-259f46b00543.png">
 
-   2. input negative file, the wells treated with non-specific siRNAs, [Example_negative_wells.list](https://github.com/YajingHao/ZetaSuit/tree/master/data). If users didn't have the build-in negative controls, the non-expressed genes should be provided here.
-   3. input positive file, the wells treated with siRNAs targeting to PTB, [Example_positive_wells.list](https://github.com/YajingHao/ZetaSuit/tree/master/data). If users didn't have the build-in negative controls, choose the parameters `-withoutsvm` and the filename can use any name such as 'NA'.
-   4. input internal negative control (non-expressed genes), genes which annotated as non-expressed (RPKM<1) in HeLa cells, [Example_NonExp_wells.list](https://github.com/YajingHao/ZetaSuit/tree/master/data).
+   2. input negative file, the wells treated with non-specific siRNAs, [Example_negative_wells.list](https://github.com/YajingHao/ZetaSuit/blob/master/example/Example_negative_wells.list). If users didn't have the build-in negative controls, the non-expressed genes should be provided here.
+   3. input positive file, the wells treated with siRNAs targeting to PTB, [Example_positive_wells.list](https://github.com/YajingHao/ZetaSuit/blob/master/example/Example_postive_wells.list). If users didn't have the build-in positive controls, choose the parameters `-withoutsvm` and the filename can use any name such as 'NA'.
+   4. input internal negative control (non-expressed genes), genes which annotated as non-expressed (RPKM<1) in HeLa cells, [Example_NonExp_wells.list](https://github.com/YajingHao/ZetaSuit/blob/master/example/Example_NonExp_wells.list).
   
 #### step 2. run [ZetaSuite](https://github.com/YajingHao/ZetaSuit) main pipeline
    
@@ -163,14 +184,14 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
 
 
 
-   2. Normalized matrix:  `cd Zscore` **Example_Zscore.matrix** is the normalized matrix, each row represents each knocking-down condition and each column is a specific readout. The values in the matrix are the normalized value.
+   2. Normalized matrix:  `cd Zscore` **Example_Zscore.matrix** is the normalized matrix, each row represents each knocking-down condition and each column is a specific readout. The values in the matrix are the normalized values.
    
    3. EventCoverage figures for positive and negative samples: `cd EventCoverage`
      
    ![EC_figures-01](https://user-images.githubusercontent.com/65927843/118417118-8689da00-b667-11eb-86eb-8a3813385110.png)
 
    
-   4. ZetaScore file: `cd Zscore` Example_Zeta.txt is the zeta values for all tested knockding-down genes including positive and negative controls. The first line is the direction which means the knockding-down lead to exon inclusion, whereas the second line is the knock-down lead to exon skipping.
+   4. ZetaScore file: `cd Zeta` Example_Zeta.txt is the zeta values for all tested knockding-down genes including positive and negative controls. The first column is the direction which knockding-down lead to exon inclusion, whereas the second column is the knock-down lead to exon skipping.
    
    5. ZetaScore figure: `cd FDR_cutoff` Example_Zeta_type.pdf
    <img width="990" alt="image" src="https://user-images.githubusercontent.com/65927843/118415093-3148cb00-b65d-11eb-8e1c-448aaf00a173.png">
@@ -196,16 +217,16 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
      ```
 #### step 4. removing off-targeting genes
    
-   The input files for off-targeting remove are: 
+   The input files for off-targeting removing are: 
    
    
 ##### 1) Targeting RNA sequences
    
-   You can find this file in **example** folder: *Example_siRNA.fa*.
+   You can find this file in **example** folder: [Example_siRNA.fa](https://github.com/YajingHao/ZetaSuit/blob/master/example/Example_siRNA.fa).
      
 ##### 2) Gloden gene sets
    
-   You can find this file in **example** folder: *Example_GlodenSet.txt*. This is constructed based on the priori knowledge.
+   You can find this file in **example** folder: [Example_GlodenSet.txt](https://github.com/YajingHao/ZetaSuit/blob/master/example/Example_GlodenSet.txt). This is constructed based on the priori knowledge.
    
    In the example data, we used the annotated spliceosome genes as golden set.
    
@@ -245,7 +266,7 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
    cd bin
    sh OffTargeting.sh -b ../output_example/Hits -i ../output_example/Hits/Example_hits.txt -o OffT -m ../output_example/Zscore/Example_Zscore.matrix -t ../example/Example_siRNA.fa -l ../example/gencode.v28.annotation.bed -g ../example/Example_GlodenSet.txt -c ../example/geneID_transcriptID_geneName_V28
    ```
-   The output files is in **../output_example/Hits** folder: *OffT_output.txt* ; the hits appear in this file were candidate off-targeting genes.
+   The output files is in **../output_example/Hits** folder: *OffT_output.txt* ; the hits appear in this file were candidate off-targeting genes. In our example dataset, there were no candidate off-targeting hits.
    
 #### step 5. functional interpretation of hits
    The input file is hits file from **step3**
@@ -262,9 +283,12 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
     
 #### step 6. constructing network files
    The input files for Network construction are:
-    1)Normalized matrix from **step2**
-    2)Hits from **step3**
-    3)consensus_score_cutoff, the threshold to choose edges in the network.
+   
+   1)Normalized matrix from **step2**
+    
+   2)Hits from **step3**
+    
+   3)consensus_score_cutoff: the threshold to choose edges in the network.
    
    ```
      cd bin
