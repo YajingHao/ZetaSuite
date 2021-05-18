@@ -51,7 +51,10 @@ The installation procedure is extremely easy.
    `github clone https://github.com/YajingHao/ZetaSuit.git`
 2. go into the directory in the command line. 
    
-   `cd ZetaSuite/bin`
+   ```
+   cd ZetaSuite/bin
+   chmod 777 ./*
+   ```
    
 3. go to website to download the annotation dataset
    
@@ -60,9 +63,15 @@ The installation procedure is extremely easy.
    `mv ./hg38_chr.fa ./dataSets`
    
 4. test the example data.
-   
-   `perl ZetaSuite.pl -id ./example -od ./output_example -in Example_matrix.txt -op Example -p Example_postive_wells.list -n Example_negative_wells.list -ne Example_NonExp_wells.list -z yes -c yes -svm no`
 
+   Go to ZetaSuite directory,and run the example.
+   
+   ```
+   chmod 777 ZetaSuite.pl
+   perl ZetaSuite.pl -id ./example -od ./output_example -in Example_matrix.txt -op Example -p Example_postive_wells.list -n Example_negative_wells.list -ne Example_NonExp_wells.list -z yes -c yes -svm no
+   
+   ```
+    
 And it is done :v:!
 
 ## The overall workflow of ZetaSuite.
@@ -208,7 +217,12 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
    
    The default file is human gene locations downloaded from [Genecode database](https://www.gencodegenes.org/human/)(V28).
    
-   You can find this file in **example** folder: *gencode.v28.annotation.bed*
+   You can find this file in **example** folder: *gencode.v28.annotation.bed.gz*
+   
+   Uncompress it.
+   
+   `unzip gencode.v28.annotation.bed.zip`
+   
    
 ##### 5) GeneID transfer files: Transfer transcript name to GeneID. You can construct the file directly from the gtf files downloaded from [Genecode database](https://www.gencodegenes.org/human/).
   
