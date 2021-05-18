@@ -51,8 +51,15 @@ The installation procedure is extremely easy.
    `github clone https://github.com/YajingHao/ZetaSuit.git`
 2. go into the directory in the command line. 
    
-   `cd ZetaSuite`
-3. test the example data.
+   `cd ZetaSuite/bin`
+   
+3. go to website to download the annotation dataset
+   
+   `wget -c http://fugenome.ucsd.edu/HumanGenome/hg38_chr.fa `
+   
+   `mv ./hg38_chr.fa ./dataSets`
+   
+4. test the example data.
    
    `perl ZetaSuite.pl -id ./example -od ./output_example -in Example_matrix.txt -op Example -p Example_postive_wells.list -n Example_negative_wells.list -ne Example_NonExp_wells.list -z yes -c yes -svm no`
 
