@@ -90,31 +90,33 @@ And it is done :v:!
 
     `sh Preprocess.sh -a <Input_dir> -b <output_dir> -i <Input_File> -o <Output_Name>`
     
-    `Preprocess.sh` including the following steps: 
-        1. Filter low quailty samples and low quality readouts.
-        2. Using KNN to estimate the value of the missing data points in the input matrix.
+    `Preprocess.sh` includes the following two steps: 
+    
+     1. Filtering low quailty samples(rows) and low quality readouts(columns).
+     
+     2. Using KNN to estimate the value of missing data points in the input matrix.
 
-* #### If the input is the already precessed matrix, you can directly run `ZetaSuit.sh`.
+* #### If the input is the already precessed matrix, you can directly run `ZetaSuite.pl`.
 
     `perl ZetaSuite.pl -id <input_dir> -od <output_dir> -in <input_matrix> -op <output_prefix> -p <positive.list> -n <negative.list> -ne <internatal_negative.list>`
     
-    You can check the parameters for ZetaSuite by simply t
+    You can check the parameters for ZetaSuite.pl by simply type
     
     `perl ZetaSuite.pl -h`
     
     ```
     Usage:    
-    -id  <STR>   input directory [require]
-    -od  <STR>	 output directory [require]
-    -in  <STR>   input file name [require]
-    -op  <STR>	 output file prefix [require]
-    -p   <STR>	 positive control file [require]
-    -n   <STR>   negative control file [require]
-    -ne  <STR>   internal negative control file (non-expressed genes) [require]
-    -z   <STR>   zscore normalization(yes or no) [default yes]
-    -c   <STR>   combine two direction zeta together(yes or no) [default no] 
-    -svm <STR>	 svm calculation (yes or no) [dafault yes]
-    -h   <STR>   documents help
+    -id  <STR>      input directory [require]
+    -od  <STR>	    output directory [require]
+    -in  <STR>      input file name [require]
+    -op  <STR>	    output file prefix [require]
+    -p   <STR>	    positive control file [require]
+    -n   <STR>      negative control file [require]
+    -ne  <STR>      internal negative control file (non-expressed genes) [require]
+    -z   <STR>      zscore normalization(yes or no) [default yes]
+    -c   <STR>      combine two direction zeta together(yes or no) [default no] 
+    -svm <STR>	    svm calculation (yes or no) [dafault yes]
+    -h   <STR>      documents help
     
     ```
 
