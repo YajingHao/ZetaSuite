@@ -100,7 +100,7 @@ And it is done :v:!
 
     `perl ZetaSuite.pl -id <input_dir> -od <output_dir> -in <input_matrix> -op <output_prefix> -p <positive.list> -n <negative.list> -ne <internatal_negative.list>`
     
-    You can check the parameters for ZetaSuite.pl by simply type
+    You can check the parameters for `ZetaSuite.pl` by simply type
     
     `perl ZetaSuite.pl -h`
     
@@ -120,51 +120,51 @@ And it is done :v:!
     
     ```
 
-    `ZetaSuite.pl` including the following steps:
+    `ZetaSuite.pl` includes the following steps:
    
     1). QC evaluation of the input matrix `<input_matrix>`. We just evaluate the QC but will not do any filterations.
   
-    2). Calculate the Z-score to make the readouts are comparable.(option command `-z` yes or no,default: yes)
+    2). Calculating the Z-score to make the readouts are comparable.(option command `-z` yes or no,default: yes)
     
-    3). Calculate the Event Coverage for each genes. 
+    3). Calculating the Event Coverage for each gene(row). 
     
-    4). Using the SVM curve to filter the genes which is more similar with the negative control.(option command `-svm` yes or no , default: yes)
+    4). Using the SVM curve to filter the genes which show similar responce with negative controls.(option command `-svm` yes or no , default: yes)
     
-    5). Whether the user need to directly compare the Zeta score in two directions and use the combined Zeta score to do hits' selection? (option command `-c` yes or no, default: no)
+    5). Whether users need to directly compare the Zeta score in two directions and use the combined Zeta score to do hits' selection? (option command `-c` yes or no, default: no)
     
-    6). Calculate the Zeta score.
+    6). Calculating the Zeta score.
     
-    7). Draw screen strength curve based on the internal negative control `<internatal_negative.list>`.
+    7). Drawing screen strength curve based on the internal negative control `<internatal_negative.list>`.
  
   
 * #### If the input is already normalized matrix, you can directly run `ZetaSuite.pl` with parameter `-z no`. 
 
 ### Following steps were decided by the users, see example for detail.
-  1. Based on the screen strength curve, users can define their optimal threshold by considering both SS and inflection points..
-  2. Based on the threshold to selected the hits.
-  3. Remove Off-targeting hits based on the regulation similarity and siRNA targeting.
+  1. Based on the screen strength curve, users can define their optimal threshold by considering both SS and balance points.
+  2. Based on the threshold to select hits.
+  3. Removing Off-targeting hits based on the regulation similarity and siRNA targeting.
   4. Function interpretation of selected hits based on [ClusterProfiler](https://github.com/YuLab-SMU/clusterProfiler) and [CORUM complexes database](https://github.com/YuLab-SMU/clusterProfiler).The top 15 GO terms with lowest adjust p-values were presented and the top 15 complexes with highest hits’ number were gave.If the complexes number were lower than 15, the complexes with hits’ number larger than 3 would be outputted.
-  5. Constructed Network files for user selected hits. Then can directly input [Gephi](https://gephi.org/) for visulization.
+  5. Constructing Network files for users' selected hits. Then directly used as input to [Gephi](https://gephi.org/) for visulization.
  
  ----------------------------------------------------------------------------------------------------------------------------------------------------------------
  ## Testing ZetaSuite using one example
-We provided example data (our in-house HTS2 screening dataset) for using ZetaSuite to explore the hits and do futher functional interpretation. To save the testing time, we provide a subsampled dataset. While this test data may not yield reasonable results, it can be used to see how the workflow is configured and executed.
+We provided example data (our in-house HTS2 screening dataset) for using ZetaSuite to explore the hits and do futher functional interpretation. To save the testing time, we provided a subsampled dataset. While this test data may not yield reasonable results, it can be used to see how the workflow is configured and executed.
 
 #### step 1. we started with the preprecessed data set which was already removed the low qulity rows and columns.
-Users can find the example data set in the [example](https://github.com/YajingHao/ZetaSuit/tree/master/example) directory.
-The example input files including:
+Users can find the example data set in the [example](https://github.com/YajingHao/ZetaSuite/tree/master/example) directory.
+The example input files include:
    
-   1. input matrix file, [Example_matrix.txt](https://github.com/YajingHao/ZetaSuit/blob/master/example/Example_matrix.txt), Each row represents gene with specific knocking-down siRNA pool, each column is an AS event. The values in the matrix are the processed foldchange values between included exons and skipping exons readcounts. 
+   1. input matrix file, [Example_matrix.txt](https://github.com/YajingHao/ZetaSuite/blob/master/example/Example_matrix.txt), Each row represents gene with specific knocking-down siRNA pool, each column is an AS event. The values in the matrix are the processed foldchange values between included exons and skipping exons read counts. 
    
       (we randomly pick-up 2000 genes and 200 AS events as example matrix)
    
       <img width="390" alt="image" src="https://user-images.githubusercontent.com/65927843/118161936-06e4dc80-b3d5-11eb-880b-259f46b00543.png">
 
-   2. input negative file, the wells treated with non-specific siRNAs, [Example_negative_wells.list](https://github.com/YajingHao/ZetaSuit/blob/master/example/Example_negative_wells.list). If users didn't have the build-in negative controls, the non-expressed genes should be provided here.
-   3. input positive file, the wells treated with siRNAs targeting to PTB, [Example_positive_wells.list](https://github.com/YajingHao/ZetaSuit/blob/master/example/Example_postive_wells.list). If users didn't have the build-in positive controls, choose the parameters `-withoutsvm` and the filename can use any name such as 'NA'.
-   4. input internal negative control (non-expressed genes), genes which annotated as non-expressed (RPKM<1) in HeLa cells, [Example_NonExp_wells.list](https://github.com/YajingHao/ZetaSuit/blob/master/example/Example_NonExp_wells.list).
+   2. input negative file, the wells treated with non-specific siRNAs, [Example_negative_wells.list](https://github.com/YajingHao/ZetaSuite/blob/master/example/Example_negative_wells.list). If users didn't have the build-in negative controls, the non-expressed genes should be provided here.
+   3. input positive file, the wells treated with siRNAs targeting to PTB, [Example_positive_wells.list](https://github.com/YajingHao/ZetaSuite/blob/master/example/Example_postive_wells.list). If users didn't have the build-in positive controls, choose the parameters `-withoutsvm` and the filename can use any name such as 'NA'.
+   4. input internal negative control (non-expressed genes), genes which annotated as non-expressed (RPKM<1) in HeLa cells, [Example_NonExp_wells.list](https://github.com/YajingHao/ZetaSuite/blob/master/example/Example_NonExp_wells.list).
   
-#### step 2. run [ZetaSuite](https://github.com/YajingHao/ZetaSuit) main pipeline
+#### step 2. run [ZetaSuite](https://github.com/YajingHao/ZetaSuite) main pipeline
    
   ```
   perl ZetaSuite.pl -id ./example -od ./output_example -in Example_matrix.txt -op Example -p Example_postive_wells.list -n Example_negative_wells.list -ne Example_NonExp_wells.list -z yes -c yes -svm yes
@@ -186,14 +186,14 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
 
 
 
-   2. Normalized matrix:  `cd Zscore` **Example_Zscore.matrix** is the normalized matrix, each row represents each knocking-down condition and each column is a specific readout. The values in the matrix are the normalized values.
+   2. Normalized matrix:  `cd Zscore` **Example_Zscore.matrix** is the normalized matrix, each row represents each knocking-down condition and each column is a specific readout (AS event). The values in the matrix are the normalized values.
    
    3. EventCoverage figures for positive and negative samples: `cd EventCoverage`
      
    ![EC_figures-01](https://user-images.githubusercontent.com/65927843/118417118-8689da00-b667-11eb-86eb-8a3813385110.png)
 
    
-   4. ZetaScore file: `cd Zeta` Example_Zeta.txt is the zeta values for all tested knockding-down genes including positive and negative controls. The first column is the direction which knockding-down lead to exon inclusion, whereas the second column is the knock-down lead to exon skipping.
+   4. ZetaScore file: `cd Zeta` Example_Zeta.txt is the zeta values for all tested knockding-down genes including positive and negative controls. The first column is the direction which knockding-down gene will lead to exon inclusion, whereas the second column is the knock-down genes will lead to exon skipping.
    
    5. ZetaScore figure: `cd FDR_cutoff` Example_Zeta_type.pdf
    <img width="990" alt="image" src="https://user-images.githubusercontent.com/65927843/118415093-3148cb00-b65d-11eb-8e1c-448aaf00a173.png">
@@ -206,7 +206,8 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
 #### step 3. selected the thresholds
      
    Users can check the Screenstrength curves (**Example_SS_cutOff.pdf**) and find the optimal threshold based on balance points and Screen strength.
-   With our example data, we actually identified two BPs, thereby enabling us to define candidate hits after BP1 and high confidence hits after BP2, the latter of which maximally eliminate true false positives derived from non-expressors. To keep enough hits for further analysis, we selected the BP1 as threshold,
+   
+   With our example data, we actually identified two BPs, thereby enabling us to define candidate hits after BP1 and high confidence hits after BP2, the latter of which maximally eliminate true false positives derived from non-expressors. To keep enough hits for further analysis, we selected the BP1 as threshold.
    
    Then obtain hits passed the threshold with the following command:
    
@@ -217,20 +218,20 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
       awk -v cutoff=${Cutoff} '{FS=OFS="\t"}{if(NR==1 || (($2+$3)>cutoff && $4=="Gene")){print}}' FDR_cutoff/Example_Zeta_anno.txt > Hits/Example_hits.txt
       
      ```
-#### step 4. removing off-targeting genes
+#### step 4. remove off-targeting genes
    
    The input files for off-targeting removing are: 
    
    
 ##### 1) Targeting RNA sequences
    
-   You can find this file in **example** folder: [Example_siRNA.fa](https://github.com/YajingHao/ZetaSuit/blob/master/example/Example_siRNA.fa).
+   You can find this file in **example** folder: [Example_siRNA.fa](https://github.com/YajingHao/ZetaSuite/blob/master/example/Example_siRNA.fa).
      
 ##### 2) Gloden gene sets
    
-   You can find this file in **example** folder: [Example_GlodenSet.txt](https://github.com/YajingHao/ZetaSuit/blob/master/example/Example_GlodenSet.txt). This is constructed based on the priori knowledge.
+   You can find this file in **example** folder: [Example_GlodenSet.txt](https://github.com/YajingHao/ZetaSuite/blob/master/example/Example_GlodenSet.txt). This is constructed based on the priori knowledge.
    
-   In the example data, we used the annotated spliceosome genes as golden set.
+   In the example data, we used the annotated spliceosome genes as golden sets.
    
 ##### 3) Hits from **step3**
      
@@ -238,7 +239,7 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
    
 ##### 4) Gene location files: [bed format](https://genome.ucsc.edu/FAQ/FAQformat.html#format1). The genome version should be human release 38(hg38).
    
-   The default file is human gene locations downloaded from [Genecode database](https://www.gencodegenes.org/human/)(V28).
+   The default file is human gene locations downloaded from [Gencode database](https://www.gencodegenes.org/human/)(V28).
    
    You can find this file in **example** folder: *gencode.v28.annotation.bed.gz*
    
@@ -247,7 +248,7 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
    `unzip gencode.v28.annotation.bed.zip`
    
    
-##### 5) GeneID transfer files: Transfer transcript name to GeneID. You can construct the file directly from the gtf files downloaded from [Genecode database](https://www.gencodegenes.org/human/).
+##### 5) GeneID transfer files: Transfer transcript name to GeneID. You can construct the file directly from the gtf files downloaded from [Gencode database](https://www.gencodegenes.org/human/).
   
   You can find this file in **example** folder: *geneID_transcriptID_geneName_V28*
    
@@ -270,7 +271,7 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
    ```
    The output files is in **../output_example/Hits** folder: *OffT_output.txt* ; the hits appear in this file were candidate off-targeting genes. In our example dataset, there were no candidate off-targeting hits.
    
-#### step 5. functional interpretation of hits
+#### step 5. functional interpretation of selected hits
    The input file is hits file from **step3**
     
     ```
@@ -283,7 +284,7 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
    <img width="887" alt="image" src="https://user-images.githubusercontent.com/65927843/118561319-abda1f00-b71f-11eb-9df4-53882e9ac9d2.png">
 
     
-#### step 6. constructing network files
+#### step 6. constructe network files
    The input files for Network construction are:
    
    1)Normalized matrix from **step2**
