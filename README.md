@@ -1,15 +1,15 @@
-## ZetaSuit : A Computational Method for Analyzing Multi-dimensional High-throughput Data
+## ZetaSuite : A Computational Method for Analyzing High-dimensional High-throughput Data
 
 ![Figure1-01](https://user-images.githubusercontent.com/65927843/118019732-2b29b600-b30e-11eb-9ca0-5911dd82b608.jpg)
 If you have any questions, please contact Yajing Hao <yahao@health.ucsd.edu> in [Fu Lab](http://fugenome.ucsd.edu/).
 
 ## Table of contents
 - Installation
-- The overall workflow of ZetaSuit
+- The overall workflow of ZetaSuite
 - Testing ZetaSuite using one example
 - Citations
 ## Installation
-Since ZetaSuit is written in `Shell`, `R` and `Perl`, `R` and `Perl` are needed. 
+Since ZetaSuite is written in `Shell`, `R` and `Perl`, `R` and `Perl` are needed. 
 
 Other R packages dependencies are:
     
@@ -48,7 +48,7 @@ Other softwares dependencies are:
 The installation procedure is extremely easy. 
 1. clone the source code from git-hub.
    
-   `git clone https://github.com/YajingHao/ZetaSuit.git`
+   `git clone https://github.com/YajingHao/ZetaSuite.git`
 2. go into the directory in the command line. 
    
    ```
