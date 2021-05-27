@@ -107,15 +107,15 @@ And it is done :v:!
     ```
     Usage:    
     -id  <STR>      input directory [require]
-    -od  <STR>	    output directory [require]
+    -od  <STR>      output directory [require]
     -in  <STR>      input file name [require]
-    -op  <STR>	    output file prefix [require]
-    -p   <STR>	    positive control file [require]
+    -op  <STR>      output file prefix [require]
+    -p   <STR>      positive control file [require]
     -n   <STR>      negative control file [require]
     -ne  <STR>      internal negative control file (non-expressed genes) [require]
     -z   <STR>      zscore normalization(yes or no) [default yes]
     -c   <STR>      combine two direction zeta together(yes or no) [default no] 
-    -svm <STR>	    svm calculation (yes or no) [dafault yes]
+    -svm <STR>      svm calculation (yes or no) [dafault yes]
     -h   <STR>      documents help
     
     ```
