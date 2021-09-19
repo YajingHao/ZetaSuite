@@ -72,6 +72,14 @@ The installation procedure is extremely easy.
    perl ZetaSuite.pl -id ./example -od ./output_example -in Example_matrix.txt -op Example -p Example_postive_wells.list -n Example_negative_wells.list -ne Example_NonExp_wells.list -z yes -c yes -svm no
    
    ```
+   
+   If you want use ZetaSuite to deal with single cell RNA-seq, run the example code below:
+   ```
+   cd example
+   tar zxvf Example.matrix.tar.gz
+   cd ..
+   perl ZetaSuite_SC.pl -id ./example -od ./output_example -in Example_matrix.txt -op Example -n 10
+   ```
     
 And it is done :v:!
 
