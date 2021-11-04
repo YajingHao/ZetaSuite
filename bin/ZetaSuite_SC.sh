@@ -22,11 +22,11 @@ if [ -z "${in_dir}" -o -z "${out_dir}" -o -z "${in_file}" -o -z "${out_name}" -o
 fi
 # make sure rows are individual cells and columns are individual genes
 # remove cell counts < 100 read counts
-#mkdir ${out_dir}
-#awk 'BEGIN{FS=OFS="\t"}{if(NR>1){sum=0;for(i=2;i<=NF;i++){sum=sum+$i};print $1,sum}}' ${in_dir}/${in_file} > ${out_dir}/${out_name}_nCount
-#awk 'BEGIN{FS=OFS="\t"}NR==FNR{if($2>100){A[$1]="yes"}}NR>FNR{if(FNR==1 || A[$1]!=""){print}}' ${out_dir}/${out_name}_nCount ${in_dir}/${in_file} > ${out_dir}/${out_name}_matrix
+mkdir ${out_dir}
+awk 'BEGIN{FS=OFS="\t"}{if(NR>1){sum=0;for(i=2;i<=NF;i++){sum=sum+$i};print $1,sum}}' ${in_dir}/${in_file} > ${out_dir}/${out_name}_nCount
+awk 'BEGIN{FS=OFS="\t"}NR==FNR{if($2>100){A[$1]="yes"}}NR>FNR{if(FNR==1 || A[$1]!=""){print}}' ${out_dir}/${out_name}_nCount ${in_dir}/${in_file} > ${out_dir}/${out_name}_matrix
 #obtain Zrange
-#Rscript $(dirname $(readlink -f $0))/obtain_ZRange_SC.R ${out_dir}/${out_name}_matrix ${binNum} ${out_dir}/${out_name}_ZRange
+Rscript $(dirname $(readlink -f $0))/obtain_ZRange_SC.R ${out_dir}/${out_name}_matrix ${binNum} ${out_dir}/${out_name}_ZRange
 #obtain ZetaScore
 cut -f 1 ${out_dir}/${out_name}_matrix > ${out_dir}/${out_name}_nFeatureDiffCutOff
 for value in $(awk 'BEGIN{FS=OFS="\t"}{if(NR>1){print $i}}' ${out_dir}/${out_name}_ZRange);do
