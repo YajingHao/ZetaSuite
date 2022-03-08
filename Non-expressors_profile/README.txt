@@ -1,1 +1,2 @@
 Non-expressor profiles in 38 cancer tissues (from TCGA), 54 normal tissues (from GTEx) as well as the in 1393 popular cancer/matched normal cell lines (from CCLE) based on RPKM<1 or TPM<5 (TPM=5 and RPKM=1 would translate to 1 molecule per cell based on prior knowledge) are provided in this directory. Users can extract the non-expressors profilers in their interesting samples/cell lines according to the corresponding xls files.
+Due to the large file number in CCLE dataset, CCLE dataset was divided into two and stored at CCLE and CCLE_Part2 folders.
