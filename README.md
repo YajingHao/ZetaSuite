@@ -322,13 +322,13 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
     library(seurat)
     sce<-CreateSeuratObject(counts = Read10X(file_path), project = "fileName" )
     matrix<-t(as.data.frame(sce[["RNA"]]@counts)) 
-    write.table(matrixfilter,"Matrix_rawCount.txt",sep="\t",row.names=T,col.names=T)
+    write.table(matrixfilter,"Placenta_input.matrix",sep="\t",row.names=T,col.names=T)
  ```
  
  ###step2. Using ZetaSuite to filter the empty or broken cells. Note, we recommend to remove the mitochondria genes. 
  ```
-    cut -f 1-27124,27138- ../DataSets/Placenta_input.matrix > Placenta_rmMT.matrix
-    perl ZetaSuite_SC.pl -id ../Figure7d-n  -od ../Figure7d-n -in Placenta_rmMT.matrix -op placenta -n 10
+    cut -f 1-27124,27138- ../example/Placenta_input.matrix > Placenta_rmMT.matrix
+    perl ZetaSuite_SC.pl -id ./  -od ./ -in Placenta_rmMT.matrix -op placenta -n 10
  ```
 
 ###step3. Based on the output of ZetaSuite, we choose the cut-off (Zeta score = 1259) to filter cells.
