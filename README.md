@@ -34,10 +34,11 @@ Other R packages dependencies are:
      library(SC3)
      library(SingleCellExperiment)
      library(NbClust)
+     library(mixtools)
      
 You can just run the code below to install all the dependent R packages at once:
 
-`install.packages(c("foreach", "ggplot2","parallel","RColorBrewer", "reshape2","DMwR","e1071", "Rtsne","clusterProfiler","org.Hs.eg.db","enrichplot","DOSE","bubbles","colorRamps","webshot","htmlwidgets","SC3","SingleCellExperiment","NbClust"))`
+`install.packages(c("foreach", "ggplot2","parallel","RColorBrewer", "reshape2","DMwR","e1071", "Rtsne","clusterProfiler","org.Hs.eg.db","enrichplot","DOSE","bubbles","colorRamps","webshot","htmlwidgets","SC3","SingleCellExperiment","NbClust","mixtools"))`
 
 Other softwares dependencies are:
 
@@ -155,7 +156,7 @@ And it is done :v:!
   5. Constructing Network files for users' selected hits. Then directly used as input to [Gephi](https://gephi.org/) for visulization.
  
  ----------------------------------------------------------------------------------------------------------------------------------------------------------------
- ## Testing ZetaSuite using one example
+ ## Testing ZetaSuite using one example (Large-scale RNAi screening)
 We provided example data (our in-house HTS2 screening dataset) for using ZetaSuite to explore the hits and do futher functional interpretation. To save the testing time, we provided a subsampled dataset. While this test data may not yield reasonable results, it can be used to see how the workflow is configured and executed.
 
 #### step 1. we started with the preprecessed data set which was already removed the low qulity rows and columns.
@@ -312,7 +313,53 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
  
  ![Network](https://user-images.githubusercontent.com/65927843/118563054-bb0e9c00-b722-11eb-9f33-d8299e5d2abc.png)
 
- # Citations
+ ## Testing ZetaSuite using one example (single-cell transcriptomics)
+ 
+ In this part, we provide an example using the example datasets in our Manuscript Figure7andS7.
+ 
+ ###step1. Obtain the cell x gene matrix. If the output files is 10x, you can directly obtain the matrix from their output files.
+ ```
+    library(seurat)
+    sce<-CreateSeuratObject(counts = Read10X(file_path), project = "fileName" )
+    matrix<-t(as.data.frame(sce[["RNA"]]@counts)) 
+    write.table(matrixfilter,"Matrix_rawCount.txt",sep="\t",row.names=T,col.names=T)
+ ```
+ 
+ ###step2. Using ZetaSuite to filter the empty or broken cells. Note, we recommend to remove the mitochondria genes. 
+ ```
+    cut -f 1-27124,27138- ../DataSets/Placenta_input.matrix > Placenta_rmMT.matrix
+    perl ZetaSuite_SC.pl -id ../Figure7d-n  -od ../Figure7d-n -in Placenta_rmMT.matrix -op placenta -n 10
+ ```
+
+###step3. Based on the output of ZetaSuite, we choose the cut-off (Zeta score = 1259) to filter cells.
+```
+   awk 'BEGIN{FS=OFS="\t"}NR==FNR{if($2>1259){A[$1]="yes"}}NR>FNR{if(FNR==1 || A[$1]!=""){print}}' placenta_Zeta  Placenta_rmMT.matrix > Placenta_rmMT_filter.matrix
+```
+
+###step4. The output file from step3 can be used as input for futher single-cell RNA-seq analysis. Following steps shows that how to used seurat for further analysis.
+```
+    stringsAsFactors = FALSE
+    set.seed(12345)
+    TableA <-read.table("Placenta_rmMT_filter.matrix",sep="\t", header=T,row.names=1)
+    TableA<-t(TableA)
+    simple.merge.obj <- CreateSeuratObject(counts = TableA, project = "placenta")
+    #Log normalization
+    simple.merge.obj <- NormalizeData(simple.merge.obj)
+    #Find variable features
+    simple.merge.obj <- FindVariableFeatures(simple.merge.obj, nfeatures = 2000)
+    all.genes <- rownames(simple.merge.obj)
+    #scaling
+    simple.merge.obj <- ScaleData(simple.merge.obj, features = all.genes)
+    #run PCA analysis
+    simple.merge.obj <- RunPCA(simple.merge.obj)
+    simple.merge.obj <- FindNeighbors(simple.merge.obj, dims = 1:40)
+    #do cluster
+    simple.merge.obj <- FindClusters(simple.merge.obj, resolution = 0.5)
+    #run UMAP
+    simple.merge.obj <- RunUMAP(simple.merge.obj, dims = 1:40)
+
+```
+# Citations
 
 **software** : *Yajing Hao, Changwei Shao, Guofeng Zhao, Xiang-Dong Fu (2021). ZetaSuite, A Computational Method for Analyzing Multi-dimensional High-throughput Data, Reveals Genes with Opposite Roles in Cancer Dependency. Forthcoming*
 
