@@ -328,7 +328,7 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
  ###step2. Using ZetaSuite to filter the empty or broken cells. Note, we recommend to remove the mitochondria genes. 
  ```
     cut -f 1-27124,27138- ../example/Placenta_input.matrix > Placenta_rmMT.matrix
-    perl ZetaSuite_SC.pl -id ./  -od ./ -in Placenta_rmMT.matrix -op placenta -n 10
+    perl ZetaSuite_SC.pl -id ./  -od ./ -in Placenta_rmMT.matrix -op placenta
  ```
 
 ###step3. Based on the output of ZetaSuite, we choose the cut-off (Zeta score = 1259) to filter cells.
