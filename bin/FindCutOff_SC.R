@@ -2,7 +2,7 @@ library(mixtools)
 library(ggplot2)
 args<-commandArgs(T)
 set.seed(1234)
-lowPop<-0.0001
+lowPop<-0.02
 #lowPop<-args[2]
 data<-read.table(args[1],sep="\t",header=T)
 densityRes<-cbind(density(log10(data$Zeta),bw=0.08)$x,density(log10(data$Zeta),bw=0.08)$y)
