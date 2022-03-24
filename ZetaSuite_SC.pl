@@ -32,7 +32,7 @@ GetOptions(
 # ------------------------------------------------------------------
 #default
 $bin_number||=10;
-$filter||="yes";
+$filter||="no";
 
 #input directory
 $fIn=AbsolutePath("dir",$fIn);
@@ -99,7 +99,7 @@ Usage:
     -in  <STR>   input file name [require]
     -op  <STR>	 output file prefix [require]
     -n   <STR>   bin number [default 10]
-    -f   <STR>   need filter nCount<100 before calculation [default yes]
+    -f   <STR>   need filter nCount<100 before calculation [default no]
     -h   <STR>   documents help,
 
 Example:
