@@ -27,7 +27,7 @@ fi
 :>${out_dir}/${out_name}_FDR_cutOff_output.txt
 #two parameters here, one is non-expression genes Negative_control_use.txt and Zeta scores Zeta.txt
 awk 'BEGIN{FS=OFS="\t"}NR==FNR{A[$1]="non-exp"}NR>FNR{if(FNR==1){print $0,"type"}else if(A[$1]!=""){print $0,A[$1]}else{print $0,"Gene"}}' ${negative_control} ${in_dir}/${in_file}| awk 'BEGIN{FS=OFS="\t"}NR==FNR{A[$1]="Positive"}NR>FNR{if(FNR==1 || A[$1]==""){print $0}else if(A[$1]!=""){print $1,$2,$3,A[$1]}}' ${positive_control} - |awk 'BEGIN{FS=OFS="\t"}NR==FNR{A[$1]="NS_mix"}NR>FNR{if(FNR==1 || A[$1]=="" || $4=="non-exp" || $4=="Positive"){print $0}else if(A[$1]!=""){print $1,$2,$3,A[$1]}}' ${NS_mix} - > ${out_dir}/${out_name}_Zeta_anno.txt
-maxD=$(awk 'BEGIN{FS=OFS="\t"}{if(NR>1 && ($4=="non-exp" || $4=="Gene")){print $2+$3}}' ${out_dir}/${out_name}_Zeta_anno.txt|sort -g -r |sed -n '10,10p')
+maxD=$(awk 'BEGIN{FS=OFS="\t"}{if(NR>1 && ($4=="non-exp" || $4=="Gene")){print $2+$3}}' ${out_dir}/${out_name}_Zeta_anno.txt|sort -g -r |sed -n '20,20p')
 minD=$(awk 'BEGIN{FS=OFS="\t"}{if(NR>1 && ($4=="non-exp" || $4=="Gene")){print $2+$3}}' ${out_dir}/${out_name}_Zeta_anno.txt|sort -g |head -1)
 stepD=$(head -1 ${out_dir}/${out_name}_Zeta_anno.txt|awk -v max=${maxD} -v min=${minD} '{print (max-min)/100}')
 iFDR=$(awk 'BEGIN{FS=OFS="\t"}{if($4=="non-exp" || $4=="Gene"){sum1=sum1+1};if($4=="non-exp"){sum2=sum2+1}}END{print sum2/(sum1-1)}' ${out_dir}/${out_name}_Zeta_anno.txt)
