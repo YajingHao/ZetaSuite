@@ -3,7 +3,7 @@ library(ggplot2)
 options(digits=15)
 args<-commandArgs(T)
 #first args is the svm_input_D and the seconde is the svm_input_I
-data<-read.table(args[1],sep="\t",header=T)
+data<-read.table(args[1],sep="\t",header=T,stringsAsFactors = TRUE)
 #cost and gramma parameter were obtained from SVMtune.R
 #svm_tune<-tune.svm(label~.,data=data,type="C-classification",kernel="radial",cost=c(0.1,1,5,10),gamma=c(0.5,1,2,3,4),scale=FALSE,probability=TRUE)
 #summary(svm_tune)
@@ -23,7 +23,7 @@ temp<-paste(args[3],"svm_line_D.pdf",sep ="_")
 #pdf(temp)
 #ggplot(df, aes(x = Zscore, y = Percent)) + geom_tile(aes(fill=preds))+geom_jitter(data = data, aes(x=Zscore, y=Percent,colour=label), size = 0.2)+scale_colour_manual(values=c("#80cdc1","#f4a582"))
 #dev.off()
-data<-read.table(args[2],sep="\t",header=T)
+data<-read.table(args[2],sep="\t",header=T,stringsAsFactors = TRUE)
 #svm_tune<-tune.svm(label~.,data=data,type="C-classification",kernel="radial",cost=c(0.1,1,5,10),gamma=c(0.5,1,2,3,4),scale=FALSE,probability=TRUE)
 #summary(svm_tune)
 #svm_model_after_tune<-svm_tune$best.model
