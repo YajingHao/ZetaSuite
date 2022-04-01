@@ -14,7 +14,7 @@ set.seed(42)
 tsne <- Rtsne(data[,seq(1,length(data[1,])-1)], dims = 2, perplexity=30, verbose=TRUE, max_iter = 10000)
 tSNEdata<-as.data.frame(cbind(tsne$Y,data$Type))
 pdf(args[3])
-ggplot(tSNEdata)+geom_point(aes(x=V1,y=V2,col=as.factor(V3)),size=1)+theme_bw()+scale_color_manual(labels = c("Negative", "Positive"),values=c("#5aae61","#c2a5cf"))+theme_bw()+theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),legend.title = element_blank())+xlab("tSNE-1")+ylab("tSNE-2")
+ggplot(tSNEdata)+geom_point(aes(x=as.numeric(as.character(V1)),y=as.numeric(as.character(V2)),col=as.factor(V3)),size=1)+theme_bw()+scale_color_manual(labels = c("Negative", "Positive"),values=c("#5aae61","#c2a5cf"))+theme_bw()+theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),legend.title = element_blank())+xlab("tSNE-1")+ylab("tSNE-2")
 dev.off()
 Negative<-data[data$Type=="Negative",]
 meltNegative<-melt(Negative,id="Type")
