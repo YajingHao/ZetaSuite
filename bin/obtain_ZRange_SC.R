@@ -1,5 +1,6 @@
 library(ggplot2)
 library(reshape2)
+set.seed(123)
 args<-commandArgs(T)
 data<-read.table(args[1],sep="\t",header=T,row.names=1)
 minvalue1<-min(10000,floor(length(data[,1])*0.5))
