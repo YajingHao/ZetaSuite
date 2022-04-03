@@ -7,6 +7,7 @@ If you have any questions, please contact Yajing Hao <yahao@health.ucsd.edu> in 
 - Installation
 - The overall workflow of ZetaSuite
 - Testing ZetaSuite using one example
+- Guide of generating non-expressors
 - Citations
 ## Installation
 Since ZetaSuite is written in `Shell`, `R` and `Perl`, `R` and `Perl` are needed. 
@@ -359,6 +360,10 @@ The most time cosuming step is SVM in our pipeline. If you just want to test the
     simple.merge.obj <- RunUMAP(simple.merge.obj, dims = 1:40)
 
 ```
+# Guide of generating non-expressors
+
+## Users could retrieve the non-expressors from many known databases, such as GEPIA(http://gepia.cancer-pku.cn/), Expression Atlas (https://www.ebi.ac.uk/gxa/home), Gene Expression Barcode database (http://barcode.luhs.org), etc. Moreover, we also provided non-expressor profiles in 38 cancer tissues (from TCGA), 54 normal tissues (from GTEx) as well as 1393 popular cancer/matched normal cell lines (from CCLE) in our website (https://github.com/YajingHao/ZetaSuite/tree/master/Non-expressors_profile). As for some new/rare cell types, users can either search the GEO database or directly generate RNA-seq data and then use classical RNA-seq processing pipelines provided in Homer(http://homer.ucsd.edu/homer/ngs/rnaseq/index.html) to generate the list of non-expressed genes.
+
 # Citations
 
 **software** : *Yajing Hao, Changwei Shao, Guofeng Zhao, Xiang-Dong Fu (2021). ZetaSuite, A Computational Method for Analyzing Multi-dimensional High-throughput Data, Reveals Genes with Opposite Roles in Cancer Dependency. Forthcoming*
